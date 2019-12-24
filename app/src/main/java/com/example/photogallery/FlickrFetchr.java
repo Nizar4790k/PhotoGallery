@@ -89,11 +89,14 @@ public class FlickrFetchr {
 
         JSONObject photosJsonObject = jsonBody.getJSONObject("photos");
         JSONArray photoJsonArray = photosJsonObject.getJSONArray("photo");
+        Gson gson = new Gson();
 
-
+        /*
 
         for (int i = 0; i < photoJsonArray.length(); i++) {
             JSONObject photoJsonObject = photoJsonArray.getJSONObject(i);
+            Log.i(TAG,""+photoJsonObject.toString());
+
             GalleryItem item = new GalleryItem();
             item.setId(photoJsonObject.getString("id"));
             item.setCaption(photoJsonObject.getString("title"));
@@ -104,6 +107,18 @@ public class FlickrFetchr {
             items.add(item);
         }
 
+
+         */
+
+
+        for (int i = 0; i < photoJsonArray.length(); i++) {
+            JSONObject photoJsonObject = photoJsonArray.getJSONObject(i);
+            Log.i(TAG,""+photoJsonObject.toString());
+
+            GalleryItem item = gson.fromJson(photoJsonObject.toString(),GalleryItem.class);
+
+            items.add(item);
+        }
 
 
 
