@@ -91,11 +91,7 @@ public class FlickrFetchr {
         JSONArray photoJsonArray = photosJsonObject.getJSONArray("photo");
 
 
-        Type listType = new TypeToken<ArrayList<GalleryItem>>(){}.getType();
-        items = new Gson().fromJson(String.valueOf(photoJsonArray),listType);
 
-
-        /*
         for (int i = 0; i < photoJsonArray.length(); i++) {
             JSONObject photoJsonObject = photoJsonArray.getJSONObject(i);
             GalleryItem item = new GalleryItem();
@@ -108,9 +104,9 @@ public class FlickrFetchr {
             items.add(item);
         }
 
-         */
 
-        items.size();
+
+
     }
 
 }

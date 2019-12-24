@@ -1,6 +1,9 @@
 package com.example.photogallery;
 
+import com.google.gson.annotations.SerializedName;
+
 public class GalleryItem {
+
 
     private String mCaption;
     private String mId;
