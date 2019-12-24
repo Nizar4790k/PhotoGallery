@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import static android.content.ContentValues.TAG;
 public class PhotoGalleryFragment extends Fragment {
 
     private RecyclerView mPhotoRecyclerView;
+    private ProgressBar mProgressBar;
     private List<GalleryItem> mItems = new ArrayList<>();
     private boolean loading = true;
 
@@ -47,6 +49,11 @@ public class PhotoGalleryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
         mPhotoRecyclerView = (RecyclerView) view.findViewById(R.id.photo_recycler_view);
         mPhotoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        mProgressBar = view.findViewById(R.id.progressBar2);
+
+
+
+
         mPhotoRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
 
@@ -74,8 +81,22 @@ public class PhotoGalleryFragment extends Fragment {
 
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
 
+
+                            FetchItemsTask fetchItemsTask = new FetchItemsTask();
+                            fetchItemsTask.execute();
+
+                            mPhotoRecyclerView.getAdapter().notifyDataSetChanged();
+                            mPhotoRecyclerView.setAdapter(new PhotoAdapter(mItems));
+
+
+
+
+
+
+
+
                             Log.v("...", " Reached Last Item");
-                            setupAdapter();
+
 
                         }
 
@@ -155,6 +176,7 @@ public class PhotoGalleryFragment extends Fragment {
 
         }
     }
+
 
 
 
