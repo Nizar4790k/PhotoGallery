@@ -32,7 +32,7 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
-public class PhotoGalleryFragment extends Fragment {
+public class PhotoGalleryFragment extends VisibleFragment {
 
     private RecyclerView mPhotoRecyclerView;
     private ProgressBar mProgressBar;
