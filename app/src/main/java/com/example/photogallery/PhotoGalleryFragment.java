@@ -84,7 +84,8 @@ public class PhotoGalleryFragment extends VisibleFragment {
         View view = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
         mPhotoRecyclerView = (RecyclerView) view.findViewById(R.id.photo_recycler_view);
         mPhotoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        mProgressBar = view.findViewById(R.id.progressBar2);
+        mProgressBar = view.findViewById(R.id.progress_bar);
+
 
 
 
@@ -199,17 +200,35 @@ public class PhotoGalleryFragment extends VisibleFragment {
     }
 
 
-    private class PhotoHolder extends RecyclerView.ViewHolder {
+    private class PhotoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImageView ;
+        private  GalleryItem mGalleryItem;
+
         public PhotoHolder(View itemView) {
             super(itemView);
             mImageView = (ImageView) itemView;
+            itemView.setOnClickListener(this);
         }
 
         public void bindDrawable (Drawable drawable){
+
             mImageView.setImageDrawable(drawable);
         }
 
+        public void bindGalleryItem(GalleryItem galleryItem) {
+            mGalleryItem = galleryItem;
+
+        }
+
+
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = PhotoPageActivity.newIntent(getContext(),mGalleryItem.getPhotoPageUri());
+            startActivity(intent);
+
+
+        }
 
 
     }
@@ -230,6 +249,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
         @Override
         public void onBindViewHolder(PhotoHolder photoHolder, int position) {
             GalleryItem galleryItem = mGalleryItems.get(position);
+            photoHolder.bindGalleryItem(galleryItem);
             Drawable placeHolder = getResources().getDrawable(R.drawable.linux_icon);
             photoHolder.bindDrawable(placeHolder);
             mThumbnailDownloader.queueThumbnail(photoHolder,galleryItem.getUrl());
@@ -239,6 +259,11 @@ public class PhotoGalleryFragment extends VisibleFragment {
 
 
         }
+
+
+
+
+
         @Override
         public int getItemCount() {
             return mGalleryItems.size();
